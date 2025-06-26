@@ -1,0 +1,24 @@
+- Preference Oracle : DefaultMachineFolder = /tmp/VM => Pour ecole pour aller plus vite que dans le sgoinfre
+
+- Creer un dossier vagrant_folder dans sgoinfre (ou sera copier les fichiers copies normalement dans .vagrant.d)
+
+- Creer un lien symbolique depuis le home vers le vagrant_folder
+```` ln -s /home/galambey/sgoinfre/vagrant_folder .vagrant.d ```
+
+- Creer un dossier Ma_VM dans home ou ailleurs aller dedans, faire :
+``` vagrant init debian/bookworm64 ``` si on veut installer cette version
+sinon chercher les versions officielles ici : https://portal.cloud.hashicorp.com/vagrant/discover
+=> Cree un fichier Vagrantfile
+
+- configurer comme on veut ce fichier
+
+- Pour lancer la vm : vagrant up la ou se trouve le Vagrantfile
+
+
+
+
+CMD:
+vagrant init /debian/bookworm64
+vagrant up -> Construit et lance la vm
+vagrant halt -> arrete la vm
+vagrant destroy -> Detruit la vm
