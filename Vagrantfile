@@ -24,9 +24,13 @@ Vagrant.configure("2") do |config|
       node.vm.box = machine[:image]
       # node.vm.network "private_network", ip: machine[:ip]
       
-      config.secret.load(".vagrant-secret")
-      username=config.secret["USERNAME"]
-      pass=config.secret["PASS"]
+      secrets = {}
+      File.readlines(".vagrant-secret").each do |line|
+        key, value = line.strip.split("=", 2)
+        secrets[key] = value
+      end
+      username=secrets["USERNAME"]
+      pass=secrets["PASS"]
       
       # VM hostname
       node.vm.hostname = machine[:hostname]
