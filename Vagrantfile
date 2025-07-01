@@ -31,6 +31,9 @@ Vagrant.configure("2") do |config|
       end
       username=secrets["USERNAME"]
       pass=secrets["PASS"]
+      github_token=secrets["GITHUB_TOKEN"]
+      github_mail=secrets["GITHUB_MAIL"]
+      github_name=secrets["GITHUB_NAME"]
       
       # VM hostname
       node.vm.hostname = machine[:hostname]
@@ -46,7 +49,7 @@ Vagrant.configure("2") do |config|
         vb.cpus = machine[:cpus]
       end
       # VM script configuration to run
-      node.vm.provision "shell", path: machine[:script], args: [username, pass]
+      node.vm.provision "shell", path: machine[:script], args: [username, pass, github_token, github_mail, github_name]
       # Define shared folder between Host machine and VM => "path_host_folder_name", "path_VM_folder_name" 
       # node.vm.synced_folder machine[:path_host_synced_folder], machine[:path_VM_synced_folder]
       # Disable the default share of the current code directory.
