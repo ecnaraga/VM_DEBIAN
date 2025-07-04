@@ -11,10 +11,10 @@ apt-get install task-gnome-desktop -y
 PASS=$(openssl passwd -6 $2)
 # Create a user + sudo rights
 useradd -m -p $PASS $1
-# To force user to change his passwd at first connexion
-passwd -e $1
-# To give sudo rigths
-usermod -aG sudo $1
+# # To force user to change his passwd at first connexion
+# passwd -e $1
+# # To give sudo rigths
+# usermod -aG sudo $1
 
 apt-get update && apt-get upgrade
 
@@ -43,9 +43,23 @@ echo $3 > token.txt
 gh auth login --with-token < token.txt
 # Adding ssh_key to github account
 gh ssh-key add /home/$1/.ssh/id_rsa.pub --title "IOT"
-# To be able to add, commit, push
-git config --global user.email "$4"
-git config --global user.name "$5"
+To be able to add, commit, push
+# echo "$(whoami)"
+# echo "********************TEST0**************************"
+# sudo su - $1 << $2
+# echo "$(whoami)"
+# echo "********************TEST1**************************"
+# git config --global user.email "$4"
+# echo "********************TEST2**************************"
+# git config --global user.name "$5"
+# echo "********************TEST3**************************"
+# exit
+# echo "$(whoami)"
+
+# To force user to change his passwd at first connexion
+passwd -e $1
+# To give sudo rigths
+usermod -aG sudo $1
 
 # Make
 echo "MAKE"
@@ -83,4 +97,7 @@ apt-get update && apt-get install vagrant -y
 # apt-get install git -y
 # apt-get install grub-pc-bin -y
 
+## TO DO :
+# - Add modification file sudoers to allow a certain member to execute through a script sudo
+# - Add package docker
 reboot
