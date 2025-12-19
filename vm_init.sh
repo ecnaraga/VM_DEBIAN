@@ -38,23 +38,23 @@ echo "GIT"
 apt-get install git -y
 # GIT CLI INSTALLATION
 apt-get install gh
-# Authentificate to github account through classic token
-echo $3 > token.txt
-gh auth login --with-token < token.txt
-# Adding ssh_key to github account
-gh ssh-key add /home/$1/.ssh/id_rsa.pub --title "IOT"
-To be able to add, commit, push
-# echo "$(whoami)"
-# echo "********************TEST0**************************"
-# sudo su - $1 << $2
-# echo "$(whoami)"
-# echo "********************TEST1**************************"
-# git config --global user.email "$4"
-# echo "********************TEST2**************************"
-# git config --global user.name "$5"
-# echo "********************TEST3**************************"
-# exit
-# echo "$(whoami)"
+# # Authentificate to github account through classic token
+# echo $3 > token.txt
+# gh auth login --with-token < token.txt
+# # Adding ssh_key to github account
+# gh ssh-key add /home/$1/.ssh/id_rsa.pub --title "IOT"
+# # To be able to add, commit, push
+# # echo "$(whoami)"
+# # echo "********************TEST0**************************"
+# # sudo su - $1 << $2
+# # echo "$(whoami)"
+# # echo "********************TEST1**************************"
+# # git config --global user.email "$4"
+# # echo "********************TEST2**************************"
+# # git config --global user.name "$5"
+# # echo "********************TEST3**************************"
+# # exit
+# # echo "$(whoami)"
 
 # To force user to change his passwd at first connexion
 passwd -e $1
@@ -79,11 +79,11 @@ apt-get install apt-transport-https
 apt-get update
 apt-get install code
 
-# Vagrant
-echo "VAGRANT"
-wget -O - https://apt.releases.hashicorp.com/gpg | gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
-echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(grep -oP '(?<=UBUNTU_CODENAME=).*' /etc/os-release || lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
-apt-get update && apt-get install vagrant -y
+# # Vagrant
+# echo "VAGRANT"
+# wget -O - https://apt.releases.hashicorp.com/gpg | gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+# echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(grep -oP '(?<=UBUNTU_CODENAME=).*' /etc/os-release || lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+# apt-get update && apt-get install vagrant -y
 
 # # Nasm (Pour compiler asm intel syntax)
 # apt-get install nasm
@@ -99,5 +99,31 @@ apt-get update && apt-get install vagrant -y
 
 ## TO DO :
 # - Add modification file sudoers to allow a certain member to execute through a script sudo
-# - Add package docker
+
+# Docker
+apt remove $(dpkg --get-selections docker.io docker-compose docker-doc podman-docker containerd runc | cut -f1)
+# Add Docker's official GPG key:
+apt update
+apt install ca-certificates curl
+install -m 0755 -d /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc
+chmod a+r /etc/apt/keyrings/docker.asc
+
+# Add the repository to Apt sources:
+tee /etc/apt/sources.list.d/docker.sources <<EOF
+Types: deb
+URIs: https://download.docker.com/linux/debian
+Suites: $(. /etc/os-release && echo "$VERSION_CODENAME")
+Components: stable
+Signed-By: /etc/apt/keyrings/docker.asc
+EOF
+
+apt update
+apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+# Install kubectl
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+
+#Install K3D
+wget -q -O - https://raw.githubusercontent.com/k3d-io/k3d/main/install.sh | bash
 reboot
