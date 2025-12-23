@@ -30,5 +30,3 @@ echo "GITHUB_TOKEN=<GITHUB_TOKEN>" >> .vagrant-secret
 echo "GITHUB_MAIL=<GITHUB_MAIL>" >> .vagrant-secret
 echo "GITHUB_NAME=<GITHUB_NAME>" >> .vagrant-secret
 ```
-
-Hi
